@@ -1,0 +1,23 @@
+.region #block-block-3 {
+  background-color: #ffffff;
+}
+
+a span {
+  background-repeat: no-repeat;
+  font-family: 'Courier New',Courier,Monospace;
+  font-size: 38px;
+}
+
+.section #highlighted {
+  font-size: 25px;
+  height: 44px;
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border-left-style: none;
+  background-position: 0% 0%;
+  line-height: 47px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
