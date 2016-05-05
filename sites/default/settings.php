@@ -213,15 +213,15 @@
  * @endcode
  */
 $databases = array (
-  'default' => 
+  'default' =>
   array (
-    'default' => 
+    'default' =>
     array (
       'database' => 'portfolio-popson',
       'username' => 'bp_admin',
       'password' => 'GbeJ1220',
       'host' => 'localhost',
-      'port' => '',
+      'port' => '8889',
       'driver' => 'mysql',
       'prefix' => '',
     ),

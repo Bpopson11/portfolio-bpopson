@@ -21,3 +21,9 @@ a span {
   font-weight: bold;
 }
 
+.section h1 {
+  margin-bottom: 28px;
+  margin-top: 0px;
+  font-size: 41px;
+}
+
