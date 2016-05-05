@@ -1,0 +1,145 @@
+<?php
+
+global $alphabet;
+$alphabet = array(
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+);
+
+function shift_cypher_menu () {
+    $items['shift_cypher'] = array(
+        'title' => 'Use the Shift Cypher!',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('shift_form'),
+        'access callback' => TRUE,
+        'type' =>  MENU_NORMAL_ITEM,
+    );
+
+    $items['success'] = array(
+        'title' => 'Success',
+        'type' => MENU_CALLBACK,
+        'access callback' => TRUE,
+        'page callback' => 'success',
+    );
+    return $items;
+}
+
+function shift_form() {
+    $form['phrase'] = array(
+        '#title' => 'Phrase',
+        '#type' => 'textfield',
+        '#description' => t('Please enter a phrase for the cypher.'),
+        '#element_validate' => array('element_validate_scrub'),
+        '#required' => TRUE,
+    );
+
+    $form['shift_amount'] = array(
+        '#title' => 'Shift Amount',
+        '#type' => 'textfield',
+        '#description' => t('Please enter a number you want to shift by.'),
+        '#element_validate' => array('element_validate_number', 'element_validate_range'),
+        '#required' => TRUE,
+    );
+
+    $form['shift_direction'] = array(
+        '#title' => 'Shift Direction',
+        '#type' => 'textfield',
+        '#description' => t('Please enter a direction (left or right) to shift.'),
+        '#element_validate' => array('shift_direction_validate'),
+        '#required' => TRUE,
+    );
+
+    $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Use the Shift Cypher!',
+    );
+
+    return $form;
+}
+
+//VALIDATIION
+function shift_direction_validate($element, $form_state) {
+    $allowed = array('left', 'right', 'Left', 'Right');
+    if (!in_array($form_state['values']['shift_direction'], $allowed)) {
+        form_set_error('shift_direction', t('Please enter left or right.'));
+    }
+}
+
+function element_validate_range($element) {
+    if ($element['#value'] > 25 || $element['#value'] < 1) {
+        form_error($element, t('Number must be less than 26 and greater than 0.'));
+    }
+}
+
+function element_validate_scrub($element) {
+    $to_shift = $element['#value'];
+    $leave_out = '/[^\w!?.,":;()\'\-\s*]/';
+    $numbers = '/[0-9]/';
+    if ((preg_match($leave_out, $to_shift) === 1) || (preg_match($numbers, $to_shift) === 1)) {
+        form_error($element, t('You may only use basic punctuation and letters.'));
+    }
+}
+///END VALIDATIION
+
+
+///FORM SUBMISSION
+function shift_form_submit($form, &$form_state) {
+    global $alphabet;
+    $shift_amt = $form_state['values']['shift_amount'];
+    $shift_dir = strtolower($form_state['values']['shift_direction']);
+    $shift_phrase = str_split(strtolower($form_state['values']['phrase']));
+    $result = array();
+
+    foreach ($shift_phrase as $letters) {
+        if (preg_match('/[!?.,":;\'\-\s*]/', $letters) === 1) {
+            array_push($result, $letters);
+        } else {
+            for ($i=0; $i < count($alphabet); $i++) {
+                if ($alphabet[$i] === $letters)
+                    if ($shift_dir == 'left') {
+                        $new_spot = $i - $shift_amt;
+                            if ($new_spot < 0) {
+                                $new_spot = $new_spot + 26;
+                            }
+                    } else {
+                        $new_spot = $i + $shift_amt;
+                            if ($new_spot > 25)
+                                $new_spot = $new_spot - 26;
+                    }
+            }
+            array_push($result, $alphabet[$new_spot]);
+        }
+    }
+    $result = implode($result);
+    $_SESSION['shift_cypher'] = $result;
+    $form_state['redirect'] = 'success';
+}
+
+function success() {
+    $new_phrase = $_SESSION['shift_cypher'];
+    return 'Your new phrase is ' . $new_phrase;
+}
