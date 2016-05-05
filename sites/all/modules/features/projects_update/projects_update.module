@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Projects Update feature.
+ */
+
+include_once 'projects_update.features.inc';
