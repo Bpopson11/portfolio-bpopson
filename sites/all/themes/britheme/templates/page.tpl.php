@@ -73,7 +73,7 @@
  * @ingroup templates
  */
 ?>
-<header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
+<header id="navbar" role="banner" class="<?php print $navbar_classes; ?> jumbo_header">
   <div class="jumbotron jumbo_header">
     <div class="well jumbo_well">
       <div class="<?php print $container_class; ?>">

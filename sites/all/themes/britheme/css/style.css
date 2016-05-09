@@ -1,10 +1,27 @@
 /**
  * Place your custom styles here.
  */
+
+ body {
+   background-color: #d3d7d2;
+   color: #490a30;
+   font-size: 17px;
+}
+
+
+a, p {
+  color: #490a30;
+}
+
+a:hover {
+  color: #513d47;
+}
+
 a.navbar-brand {
   text-align: center;
   font-size: 50px;
 }
+
 img.logo_image {
   width: 100%;
   margin-top: 10px;
@@ -17,9 +34,23 @@ img.logo_image {
 
 .jumbo_well {
   margin-top: 30px;
+  background-color: #d3d7d2;
+}
+
+.navbar-default .navbar-brand{
+  color: #513d47;
 }
 
 .sarcasm {
   vertical-align: middle;
   text-align: center;
+}
+
+.navbar-default .navbar-nav > li > a  {
+  color: #513d47;
+  font-size: 14px;
+}
+
+.navbar-default .navbar-nav > li > a:hover  {
+  color: #490a30;
 }
