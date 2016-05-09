@@ -10,11 +10,16 @@ img.logo_image {
   margin-top: 10px;
 }
 
-.jumbotron {
+.jumbo_header {
   background-image: url(../images/woodgrain.jpg);
   height: 250px;
 }
 
 .jumbo_well {
   margin-top: 30px;
+}
+
+.sarcasm {
+  vertical-align: middle;
+  text-align: center;
 }

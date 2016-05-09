@@ -10,7 +10,7 @@ function sarcasm_ball_menu () {
     );
 
     $items['victory'] = array(
-        'title' => 'Victory',
+        'title' => 'And the 9-ball says...',
         'type' => MENU_CALLBACK,
         'access callback' => TRUE,
         'page callback' => 'victory',
@@ -22,7 +22,7 @@ function sarcasm_ball_menu () {
 
 function question_form() {
     $form['question'] = array(
-        '#title' => 'Question',
+        '#title' => 'Ask the "magic" 9-ball a question about your future! But be warned, this ball is a jerk.',
         '#type' => 'textfield',
         '#description' => t('Ask the "magic" 9-ball a question about your future!'),
     );
@@ -37,13 +37,13 @@ function question_form() {
 
 function question_form_submit($form, &$form_state) {
     $result = array();
-    $standard = array("Hmm I cannot see clearly through all the chaos.", "Chances are looking great! But only for someone who isn't you.", "Your future is too depressing to look at, please try again later.", "Just follow my (a talking pool ball's) advice and all will be fine!", "Yes, I am totally sure that whole thing will definitely work out. Yup...", "Try not to sweat it. There is nothing that can help you now.");
+    $standard = array("Hmm I cannot see clearly through all the chaos.", "Chances are looking great! But only for someone who isn't you.", "Your future is too depressing to look at, please try again later.", "Just follow my (a talking pool ball's) advice and all will be fine!", "Yes, I am totally sure that whole thing will definitely work out. Yup...", "Try not to sweat it. There is nothing that can help you now.", "You don't want to know. Trust me.", "Uh yes...?", "I wouldn't worry too much about it. It's probably fine.", "Wow...probably not qualified to even begin to answer THAT one.", "Well maybe if you thought things through more, you wouldn't need to ask me.", "Do I look like a parental figure? I'm not. Go ask someone who is.", "Uhhhh...I don't know. I wasn't really listening.", "Am I allowed to say I don't know? Well I am. I don't know!", "Let's just both pretend you didn't ask that and move on.");
 
-    $love = array("Really? A love question? LAME.", "Sir or Madam or variation thereupon, I dont know! I am a pool ball!!", "We are currently no longer accepting relationship related questions. They were boring.", "I am sure so-and-so is totally into you, unless they are not. At which point, whoops.", "Not my area of expertise, try asking a flower.");
+    $love = array("Really? A love question? LAME.", "Sir or Madam or variation thereupon, I dont know! I am a pool ball!!", "We are currently no longer accepting relationship related questions. They were boring.", "I am sure so-and-so is totally into you, unless they are not. At which point, whoops.", "Not my area of expertise, try asking a flower.", "My last partner left me for a cue ball so I'm not a good resource.", "Sure! I mean eveything totally worked out for that Romeo and his lady Juliet right?", "Could you ask me, like, literally anything else?", "Flip a coin. Your chances are as good as the result being something other than heads or tails.", "Honestly why are you even bothering to ask?", "Tough question...Let me think about it.");
 
     $question_asked = explode(" ", strtolower( $form_state['values']['question']));
-
-    if (in_array("love", $question_asked)) {
+    $love_marker = array('love', 'girlfriend', 'boyfriend', 'husband', 'wife', 'kiss', 'marry', 'marriage', 'married', 'dating', 'date');
+    if (array_intersect($question_asked, $love_marker)) {
         $result = array_rand($love, 1);
         $answer = $love[$result];
     } else {
@@ -56,7 +56,12 @@ function question_form_submit($form, &$form_state) {
 
 function victory() {
     $response = $_SESSION['sarcasm_ball'];
-    var_dump($response);
-    return 'The 9-ball said "' . $response. '"';
-
+    $img = theme('image', array('path'=> "/sites/all/modules/custom/sarcasm_ball/images/9-ball.png"));
+    return
+    '<div class="sarcasm_response media">
+    <div class="media-left">'
+    . $img .
+    '</div><div class="media-right sarcasm well"><h1> "'
+     . $response .
+     '"</h1></div></div>';
 }

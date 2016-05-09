@@ -74,7 +74,7 @@
  */
 ?>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
-  <div class="jumbotron">
+  <div class="jumbotron jumbo_header">
     <div class="well jumbo_well">
       <div class="<?php print $container_class; ?>">
         <div class="navbar-header">
