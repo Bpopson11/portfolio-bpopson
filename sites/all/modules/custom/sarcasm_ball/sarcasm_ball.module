@@ -1,0 +1,29 @@
+<?php
+
+function sarcasm_ball_menu () {
+    $items['sarcasm_ball'] = array(
+        'title' => 'See the Future! Maybe.',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('question_form'),
+        'access callback' => TRUE,
+        'type' =>  MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function question_form() {
+    $form['question'] = array(
+        '#title' => 'Question',
+        '#type' => 'textfield',
+        '#description' => t('Ask the `magic` 9-ball a question about your future!'),
+        // '#element_validate' => array('element_validate_scrub'),
+        // '#required' => TRUE,
+    );
+
+    $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Ask your question',
+    );
+
+    return $form;
+}
