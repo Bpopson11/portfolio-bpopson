@@ -1,35 +1,5 @@
 <?php
 
-global $alphabet;
-$alphabet = array(
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-);
-
 function shift_cypher_menu () {
     $items['shift_cypher'] = array(
         'title' => 'Use the Shift Cypher!',
@@ -108,7 +78,35 @@ function element_validate_scrub($element) {
 
 ///FORM SUBMISSION
 function shift_form_submit($form, &$form_state) {
-    global $alphabet;
+    $alphabet = array(
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'g',
+        'h',
+        'i',
+        'j',
+        'k',
+        'l',
+        'm',
+        'n',
+        'o',
+        'p',
+        'q',
+        'r',
+        's',
+        't',
+        'u',
+        'v',
+        'w',
+        'x',
+        'y',
+        'z',
+    );
+
     $shift_amt = $form_state['values']['shift_amount'];
     $shift_dir = strtolower($form_state['values']['shift_direction']);
     $shift_phrase = str_split(strtolower($form_state['values']['phrase']));

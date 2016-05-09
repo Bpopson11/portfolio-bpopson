@@ -8,22 +8,55 @@ function sarcasm_ball_menu () {
         'access callback' => TRUE,
         'type' =>  MENU_NORMAL_ITEM,
     );
+
+    $items['victory'] = array(
+        'title' => 'Victory',
+        'type' => MENU_CALLBACK,
+        'access callback' => TRUE,
+        'page callback' => 'victory',
+    );
+
     return $items;
 }
+
 
 function question_form() {
     $form['question'] = array(
         '#title' => 'Question',
         '#type' => 'textfield',
-        '#description' => t('Ask the `magic` 9-ball a question about your future!'),
-        // '#element_validate' => array('element_validate_scrub'),
-        // '#required' => TRUE,
+        '#description' => t('Ask the "magic" 9-ball a question about your future!'),
     );
 
     $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Ask your question',
+        '#type' => 'submit',
+        '#value' => 'Ask your question',
     );
 
     return $form;
+}
+
+function question_form_submit($form, &$form_state) {
+    $result = array();
+    $standard = array("Hmm I cannot see clearly through all the chaos.", "Chances are looking great! But only for someone who isn't you.", "Your future is too depressing to look at, please try again later.", "Just follow my (a talking pool ball's) advice and all will be fine!", "Yes, I am totally sure that whole thing will definitely work out. Yup...", "Try not to sweat it. There is nothing that can help you now.");
+
+    $love = array("Really? A love question? LAME.", "Sir or Madam or variation thereupon, I dont know! I am a pool ball!!", "We are currently no longer accepting relationship related questions. They were boring.", "I am sure so-and-so is totally into you, unless they are not. At which point, whoops.", "Not my area of expertise, try asking a flower.");
+
+    $question_asked = explode(" ", strtolower( $form_state['values']['question']));
+
+    if (in_array("love", $question_asked)) {
+        $result = array_rand($love, 1);
+        $answer = $love[$result];
+    } else {
+        $result = array_rand($standard, 1);
+        $answer = $standard[$result];
+    }
+    $_SESSION['sarcasm_ball'] = ($answer);
+    $form_state['redirect'] = 'victory';
+}
+
+function victory() {
+    $response = $_SESSION['sarcasm_ball'];
+    var_dump($response);
+    return 'The 9-ball said "' . $response. '"';
+
 }

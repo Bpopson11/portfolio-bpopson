@@ -1,5 +1,5 @@
-name = Sarcasm 8 ball!
-description = Ask the 9-ball questions for sarcastic answers. 
+name = Sarcasm 9 ball!
+description = Ask the 9-ball questions for sarcastic answers.
 package = My Modules
 core = 7.x
 files[] = sarcasm_ball.module
